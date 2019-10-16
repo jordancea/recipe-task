@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import RecipeEntry from "./components/recipeEntry";
+import RecipeList from "./components/recipeList";
+import RecipeDetails from "./components/recipeDetails";
+import NavBar from "./components/navBar";
+import NotFound from "./components/notFound";
+import { Route, Switch, Redirect } from "react-router-dom";
+//REDUX
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import { _getRecipes } from "./redux/actions/recipesActions";
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    store.dispatch(_getRecipes());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <NavBar />
+      <main className="container">
+        <Switch>
+          <Route path="/addRecipe" component={RecipeEntry} />
+          <Route path="/recipeList" component={RecipeList} />
+          <Route path="/recipeDetails/:id" component={RecipeDetails} />
+          <Route path="/not-found" component={NotFound} />
+          <Route path="/" exact component={RecipeList} />
+          <Redirect to="/not-found" />
+        </Switch>
+      </main>
+    </Provider>
   );
-}
-
+};
 export default App;
