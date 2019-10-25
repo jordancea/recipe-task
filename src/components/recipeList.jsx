@@ -41,6 +41,7 @@ const RecipeList = ({ recipes, _getRecipes, _deleteRecipe }) => {
                 return (
                   <span className="ingredient" key={ing._id}>
                     {ing.name} - {ing.quantity} {ing.metricUnit}
+                    {ing.metric}
                   </span>
                 );
               })}

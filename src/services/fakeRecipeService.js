@@ -123,7 +123,7 @@ export function addRecipe(recipe) {
     recipeInDb._id = Date.now().toString();
     recipes.push(recipeInDb);
   }
-
+  console.log(recipeInDb);
   return recipeInDb;
 }
 
